@@ -20,15 +20,16 @@ import { useUserContext } from "@/context/AuthContext";
 import { toast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
+import Loader from "../shared/Loader";
 
 type PostFormProps = {
   post?: Models.Document;
 };
 
 const PostForm = ({ post }: PostFormProps) => {
-  // const { mutateAsync: createPost, isPending: isLoadingCreate } =
-  //   useCreatePost();
-  const { mutateAsync: createPost } = useCreatePost();
+  const { mutateAsync: createPost, isPending: isLoadingCreate } =
+    useCreatePost();
+  // const { mutateAsync: createPost } = useCreatePost();
   const { user } = useUserContext();
 
   const navigate = useNavigate();
@@ -139,7 +140,7 @@ const PostForm = ({ post }: PostFormProps) => {
             type="submit"
             className="shad-button_primary whitespace-nowrap"
           >
-            Submit
+            {isLoadingCreate ? <Loader /> : "Submit"}
           </Button>
         </div>
       </form>

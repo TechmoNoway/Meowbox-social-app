@@ -25,34 +25,32 @@ export function formatDateString(dateString: string) {
   return `${formattedDate} at ${time}`;
 }
 
-export function toRelativeTime(dateString: string): string {
-  const date = new Date(dateString);
+export const multiFormatDateString = (timestamp: string = ""): string => {
+  const timestampNum = Math.round(new Date(timestamp).getTime() / 1000);
+  const date: Date = new Date(timestampNum * 1000);
+  const now: Date = new Date();
 
-  const now = new Date();
+  const diff: number = now.getTime() - date.getTime();
+  const diffInSeconds: number = diff / 1000;
+  const diffInMinutes: number = diffInSeconds / 60;
+  const diffInHours: number = diffInMinutes / 60;
+  const diffInDays: number = diffInHours / 24;
 
-  const diffInMs = now.getTime() - date.getTime();
-
-  const diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
-
-  const diffInMonths = now.getMonth() - date.getMonth();
-
-  const diffInYears = now.getFullYear() - date.getFullYear();
-
-  let relativeTime;
-
-  if (diffInYears > 0) {
-    relativeTime = `${diffInYears} years ago`;
-  } else if (diffInMonths > 0) {
-    relativeTime = `${diffInMonths} months ago`;
-  } else if (diffInDays === 0) {
-    const diffInHours = Math.round(diffInMs / (1000 * 60 * 60));
-    relativeTime = `${diffInHours} hours ago`;
-  } else {
-    relativeTime = `${diffInDays} days ago`;
+  switch (true) {
+    case Math.floor(diffInDays) >= 30:
+      return formatDateString(timestamp);
+    case Math.floor(diffInDays) === 1:
+      return `${Math.floor(diffInDays)} day ago`;
+    case Math.floor(diffInDays) > 1 && diffInDays < 30:
+      return `${Math.floor(diffInDays)} days ago`;
+    case Math.floor(diffInHours) >= 1:
+      return `${Math.floor(diffInHours)} hours ago`;
+    case Math.floor(diffInMinutes) >= 1:
+      return `${Math.floor(diffInMinutes)} minutes ago`;
+    default:
+      return "Just now";
   }
-
-  return relativeTime;
-}
+};
 
 export const checkIsLiked = (likeList: string[], userId: string) => {
   return likeList.includes(userId);

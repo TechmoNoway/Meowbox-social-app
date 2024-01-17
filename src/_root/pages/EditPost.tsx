@@ -1,11 +1,5 @@
-import React from 'react'
-
 const EditPost = () => {
-  return (
-    <div>
-      EditPost
-    </div>
-  )
-}
+  return <div>EditPost</div>;
+};
 
-export default EditPost
+export default EditPost;

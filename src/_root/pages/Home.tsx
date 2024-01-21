@@ -17,6 +17,12 @@ const Home = () => {
       <div className="home-container">
         <div className="home-posts">
           <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
+
+          <img
+            src="https://cloud.appwrite.io/v1/storage/buckets/65a23f08e8f082def555/files/65ace62f9cbf285f5b24/view?project=65a1cdbef21bc67f66b4&mode=admin"
+            alt=""
+          />
+
           {isPostLoading && !posts ? (
             <Loader />
           ) : (
